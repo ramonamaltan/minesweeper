@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (square.classList.contains('checked') || square.classList.contains('flag')) return
     // if bomb the game is over
     if (square.classList.contains('bomb')) {
-      alert('Game over')
+      gameOver(square)
     // total over 0: show number & mark as checked
     } else {
       let total = square.getAttribute('data')
@@ -133,6 +133,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 10)
   }
 
+  // game over
+  function gameOver(square) {
+    console.log('Game over')
+    isGameOver = true
+
+    // show all bombs
+    squares.forEach(square => {
+      if (square.classList.contains('bomb')) {
+        square.innerHTML = '💣'
+      }
+    })
+  }
 
 
 })
