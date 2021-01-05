@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let squares = []
   let bombAmount = 20
   let isGameOver = false
+  let flags = 0
 
   // create Board
   function createBoard() {
@@ -34,6 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
       square.addEventListener('click', function(e) {
         click(square)
       }) 
+
+      //ctrl and left click
+      square.oncontextmenu = function(e) {
+        e.preventDefault()
+        addFlag(square)
+      }
     }
 
     // add numbers (numbers show up on fields when there's bombs around it - represents number of bombs around that field)
@@ -59,6 +66,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   }
   createBoard()
+
+  // add flag with right click
+  function addFlag(square) {
+    if (isGameOver) return
+    if (!square.classList.contains('checked') && (flags < bombAmount)) {
+      if (!square.classList.contains('flag')) {
+        square.classList.add('flag')
+        square.innerHTML = '🚩'
+        flags ++
+      } else {
+        square.classList.remove('flag')
+        square.innerHTML = ''
+        flags --
+      }
+    }
+  }
 
   // click on square actions
   function click(square) {
